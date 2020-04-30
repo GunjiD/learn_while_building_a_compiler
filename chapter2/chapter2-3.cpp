@@ -23,17 +23,14 @@ void trans_polish_notation(string str){
 	
 	for(int i = 0; i < str.size(); ++i){
 		char tmp = str[i];
-		if(tmp == '+' || tmp == '*'){ 
-			if(!opr.empty() && opr_rank(tmp) >= opr_rank(opr.top())){ 
-					opr.push(tmp);
-				} else {
-					while(!opr.empty() && opr_rank(opr.top()) >= opr_rank(tmp)){
-						cout << opr.top();
-						opr.pop();
-					}
-					opr.push(tmp);
+		if(tmp == '+' || tmp == '-' || tmp == '*'){
+			while(!opr.empty() && opr_rank(opr.top()) > opr_rank(tmp)){
+					cout << opr.top();
+					opr.pop();
 			}
-		} else { 
+			opr.push(tmp);
+		} else {
+			// 演算数のときはそのまま出力
 			cout << tmp;
 		}
 	}
@@ -53,7 +50,7 @@ int opr_rank(char str){
 		case '-':
 			return 1;
 		case '*':
-			return 2;
+			return 3;
 	}
 	return 0;
 }
